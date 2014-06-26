@@ -1,29 +1,26 @@
 class EnergyDataController < ApplicationController
-
+  respond_to :json
   # GET /energy_data
   # GET /energy_data.json
   def index
     if params[:state].nil?
-      @api_response = EnergyDatum.response("AK")
+      api_response = EnergyDatum.response("AK")
     else
-      @api_response = EnergyDatum.response(params[:state][:state])
+      api_response = EnergyDatum.response(params[:state][:state])
     end
-    @return_data = @api_response["series"][0]["data"]
-    @graph_years = data_years(@return_data)
-    binding.pry
+    return_data = api_response["series"][0]["data"]
+    @years = data_years(return_data)
+    render json: @years
+  end
+
+  def show
+    render "json_index"
   end
 
   def data_years(array)
-    # @years = Array.new
-    # array.each do |array|
-    #   @years << array[0].to_i
-    # end
-    # return @years
-    @years = Hash.new
-    array.each do |year, number|
-      @years[year] = number
+    array.map do |item|
+      {year: item[0], amount: item[1]}
     end
-    return @years
   end
 
   private
