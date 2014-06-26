@@ -1,7 +1,7 @@
 <h1>Listing energy_data</h1>
 
 <% @return_data.each do |year, amount| %>
-  <p>in <b><%= year %></b> <%=params[:state][:state]%> used <b><%= amount%></b> Mcf of coal</p>
+  <p>in <b><%= year %></b> <%= params[:state][:state]%> used <b><%= amount%></b> Mcf of coal</p>
 <%end%>
 
 <form>

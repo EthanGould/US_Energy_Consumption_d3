@@ -10,19 +10,20 @@ class EnergyDataController < ApplicationController
     end
     @return_data = @api_response["series"][0]["data"]
     @graph_years = data_years(@return_data)
+    binding.pry
   end
 
   def data_years(array)
-    @years = Array.new
-    array.each do |array|
-      @years << array[0].to_i
-    end
-    return @years
-    # @years = Hash.new
-    # array.each do |year, number|
-    #   @years[year] = number
+    # @years = Array.new
+    # array.each do |array|
+    #   @years << array[0].to_i
     # end
     # return @years
+    @years = Hash.new
+    array.each do |year, number|
+      @years[year] = number
+    end
+    return @years
   end
 
   private
