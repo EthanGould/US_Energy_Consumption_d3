@@ -10,7 +10,7 @@ class EnergyDataController < ApplicationController
     end
     return_data = api_response["series"][0]["data"]
     @years = data_years(return_data)
-    render json: @years
+    render json: @years.reverse!
   end
 
   def show
