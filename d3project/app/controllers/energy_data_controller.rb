@@ -3,19 +3,20 @@ class EnergyDataController < ApplicationController
   # GET /energy_data
   # GET /energy_data.json
   def index
-    if params[:state].nil?
+    # binding.pry
+    if params[:search].nil?
       api_response = EnergyDatum.response("AK")
     else
-      api_response = EnergyDatum.response(params[:state])
+      api_response = EnergyDatum.response(params[:search])
     end
     return_data = api_response["series"][0]["data"]
-    @years = data_years(return_data)
-    render json: @years.reverse!
-    binding.pry
+    @years = data_years(return_data).reverse!
+    render "json_index"
+    # binding.pry
   end
 
   def show
-    render "json_index"
+    redirect_to action: 'index'
   end
 
   def data_years(array)
