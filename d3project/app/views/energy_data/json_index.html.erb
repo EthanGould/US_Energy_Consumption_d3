@@ -1,12 +1,14 @@
 <div class="header">
   <h1>Metric tons of coal use</h1>
   <p class="search">search by state</p>
-  <%= form_for :energy_datum, method: :get do |f|%>
-    <%=f.text_field :state %>
+  <%= form_tag root_path, method: :get do%>
+    <p>
+      <%= text_field_tag :search%>
+      <%= submit_tag "Search" %>
+    </p>
   <% end %>
 </div>
-
-<!-- <svg  id="energies" height="400" width="1100"></svg> -->
+  <p> Params: <%= params %>
 <svg  class="chart">
 </svg>
 
