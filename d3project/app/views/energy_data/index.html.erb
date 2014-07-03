@@ -1,15 +1,12 @@
-<div class="header">
-  <h1>Metric tons of coal use</h1>
-  <p class="search">search by state</p>
-  <%= form_tag root_path, method: :get do%>
-    <p>
+<div class='container'>
+  <h1> Metric tons of coal used </h1>
+  <div class='search'>
+    <%= form_tag root_path, method: :get do %>
       <%= text_field_tag :search%>
-      <%= submit_tag "Search" %>
-    </p>
-  <% end %>
+      <%= submit_tag "Search", class: "btn btn-info btn-md", role: "button" %>
+    <% end %>
+  </div>
 </div>
-  <p> Params: <%= params %>
 <svg  class="chart">
 </svg>
-
 
