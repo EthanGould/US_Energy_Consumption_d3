@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ProjectApp">
 <head>
   <title>D3project</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -17,9 +17,10 @@
   <%= csrf_meta_tags %>
 
 </head>
-<body ng-app="ProjectApp">
+<body ng-controller="ProjectController">
 
 <%= yield %>
 
+<div ng-view></div>
 </body>
 </html>
