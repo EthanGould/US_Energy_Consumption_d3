@@ -1,7 +1,9 @@
 h1{
-  margin-left: 200px;
+  margin: 0 auto;
+  text-align: center;
 }
 .search{
-  margin-left: 315px;
+  margin: 0 auto;
+  max-width: 250px;
   margin-bottom: 30px;
 }
