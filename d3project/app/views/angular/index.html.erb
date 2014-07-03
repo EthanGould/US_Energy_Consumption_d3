@@ -1,0 +1,11 @@
+<h1> Metric tons of coal used </h1>
+<div id='content' ng-app="ProjectApp" ng-controller="ProjectController">
+  <div class="search">
+    <%= form_tag root_path, method: :get do %>
+      <%= text_field_tag :search%>
+      <%= submit_tag "Search", class: "btn btn-info", role: "button" %>
+    <% end %>
+  </div>
+</div>
+<svg  class="chart">
+</svg>
