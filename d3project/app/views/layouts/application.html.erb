@@ -18,9 +18,15 @@
 
 </head>
 <body ng-controller="ProjectController">
-
-<%= yield %>
-
-<div ng-view></div>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-md-2'>
+        <div ng-controller="ProjectController">
+          <div ng-view></div>
+        </div>
+      </div>
+    <%= yield %>
+    </div>
+  </div>
 </body>
 </html>
