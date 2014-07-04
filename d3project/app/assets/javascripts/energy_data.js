@@ -1,7 +1,7 @@
 window.onload = function() {
     var margin = {top: 20, right: 30, bottom: 30, left: 60},
-      width = 700 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = 600 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1);
