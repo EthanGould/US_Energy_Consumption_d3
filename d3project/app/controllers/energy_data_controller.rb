@@ -3,7 +3,11 @@ class EnergyDataController < ApplicationController
   # GET /energy_data
   # GET /energy_data.json
   def index
-    @state = State.find_by abrev:(params[:search]);
+    if params[:search].present?
+      @state = (State.find_by abrev:(params[:search].upcase)) || (State.find_by name:(params[:search].upcase))
+    else
+      @state = State.first
+    end
     @@search = @state.abrev
   end
 
@@ -11,8 +15,6 @@ class EnergyDataController < ApplicationController
   def show
     if @@search
       return_data = EnergyDatum.response(@@search)
-    else
-      return_data = EnergyDatum.response("NY")
     end
     years_array = return_data["series"][0]["data"].reverse!
     @d3_data = years_to_hash(years_array)
