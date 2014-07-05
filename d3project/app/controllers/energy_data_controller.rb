@@ -3,7 +3,8 @@ class EnergyDataController < ApplicationController
   # GET /energy_data
   # GET /energy_data.json
   def index
-    @@search = params[:search]
+    @state = State.find_by abrev:(params[:search]);
+    @@search = @state.abrev
   end
 
 
