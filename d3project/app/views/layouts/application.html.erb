@@ -21,8 +21,13 @@
   <div class='container'>
     <div class='row'>
       <div class='col-md-2'>
-        <div ng-controller="ProjectController">
-          <div ng-view></div>
+        <div class='well menu-well'>
+          <img class='state-pic' src=<%=@state.url%> alt='state-pic'>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href='#'>Electricity</a></li>
+            <li><a href='#'>Petroleum</a></li>
+            <li><a href='#'>Coal</a></li>
+          </ul>
         </div>
       </div>
     <%= yield %>
