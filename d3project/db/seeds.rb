@@ -1,50 +1,50 @@
-(name: "Alabama", abrev: "AL"),
-(name: "Alaska", abrev: "AK"),
-(name: "Arizona", abrev: "AZ"),
-(name: "Arkansas", abrev: "AR"),
-(name: "California", abrev: "CA"),
-(name: "Colorado", abrev: "CO"),
-(name: "Connecticut", abrev: "CT"),
-(name: "Delaware", abrev: "DE"),
-(name: "Florida", abrev: "FL"),
-(name: "Georgia", abrev: "GA"),
-(name: "Hawaii", abrev: "HI"),
-(name: "Idaho", abrev: "ID"),
-(name: "Illinois", abrev: "IL"),
-(name: "Indiana", abrev: "IN"),
-(name: "Iowa", abrev: "IA"),
-(name: "Kansas", abrev: "KS"),
-(name: "Kentucky", abrev: "KY"),
-(name: "Louisiana", abrev: "LA"),
-(name: "Maine", abrev: "ME"),
-(name: "Maryland", abrev: "MD"),
-(name: "Massachusetts", abrev: "MA"),
-(name: "Michigan", abrev: "MI"),
-(name: "Minnesota", abrev: "MN"),
-(name: "Mississippi", abrev: "MS"),
-(name: "Missouri", abrev: "MO"),
-(name: "Montana", abrev: "MT"),
-(name: "Nebraska", abrev: "NE"),
-(name: "Nevada", abrev: "NV"),
-(name: "New Hampshire", abrev: "NH"),
-(name: "New Jersey", abrev: "NJ"),
-(name: "New Mexico", abrev: "NM"),
-(name: "New York", abrev: "NY"),
-(name: "North Carolina", abrev: "NC"),
-(name: "North Dakota", abrev: "ND"),
-(name: "Ohio", abrev: "OH"),
-(name: "Oklahoma", abrev: "OK"),
-(name: "Oregon", abrev: "OR"),
-(name: "Pennsylvania", abrev: "PA"),
-(name: "Rhode Island", abrev: "RI"),
-(name: "South Carolina", abrev: "SC"),
-(name: "South Dakota", abrev: "SD"),
-(name: "Tennessee", abrev: "TN"),
-(name: "Texas", abrev: "TX"),
-(name: "Utah", abrev: "UT"),
-(name: "Vermont", abrev: "VT"),
-(name: "Virginia", abrev: "VA"),
-(name: "Washington", abrev: "WA"),
-(name: "West Virginia", abrev: "WV"),
-(name: "Wisconsin", abrev: "WI"),
-(name: "Wyoming", abrev: "WY"),
+State.create(name: "Alabama", abrev: "AL")
+State.create(name: "Alaska", abrev: "AK")
+State.create(name: "Arizona", abrev: "AZ")
+State.create(name: "Arkansas", abrev: "AR")
+State.create(name: "California", abrev: "CA")
+State.create(name: "Colorado", abrev: "CO")
+State.create(name: "Connecticut", abrev: "CT")
+State.create(name: "Delaware", abrev: "DE")
+State.create(name: "Florida", abrev: "FL")
+State.create(name: "Georgia", abrev: "GA")
+State.create(name: "Hawaii", abrev: "HI")
+State.create(name: "Idaho", abrev: "ID")
+State.create(name: "Illinois", abrev: "IL")
+State.create(name: "Indiana", abrev: "IN")
+State.create(name: "Iowa", abrev: "IA")
+State.create(name: "Kansas", abrev: "KS")
+State.create(name: "Kentucky", abrev: "KY")
+State.create(name: "Louisiana", abrev: "LA")
+State.create(name: "Maine", abrev: "ME")
+State.create(name: "Maryland", abrev: "MD")
+State.create(name: "Massachusetts", abrev: "MA")
+State.create(name: "Michigan", abrev: "MI")
+State.create(name: "Minnesota", abrev: "MN")
+State.create(name: "Mississippi", abrev: "MS")
+State.create(name: "Missouri", abrev: "MO")
+State.create(name: "Montana", abrev: "MT")
+State.create(name: "Nebraska", abrev: "NE")
+State.create(name: "Nevada", abrev: "NV")
+State.create(name: "New Hampshire", abrev: "NH")
+State.create(name: "New Jersey", abrev: "NJ")
+State.create(name: "New Mexico", abrev: "NM")
+State.create(name: "New York", abrev: "NY")
+State.create(name: "North Carolina", abrev: "NC")
+State.create(name: "North Dakota", abrev: "ND")
+State.create(name: "Ohio", abrev: "OH")
+State.create(name: "Oklahoma", abrev: "OK")
+State.create(name: "Oregon", abrev: "OR")
+State.create(name: "Pennsylvania", abrev: "PA")
+State.create(name: "Rhode Island", abrev: "RI")
+State.create(name: "South Carolina", abrev: "SC")
+State.create(name: "South Dakota", abrev: "SD")
+State.create(name: "Tennessee", abrev: "TN")
+State.create(name: "Texas", abrev: "TX")
+State.create(name: "Utah", abrev: "UT")
+State.create(name: "Vermont", abrev: "VT")
+State.create(name: "Virginia", abrev: "VA")
+State.create(name: "Washington", abrev: "WA")
+State.create(name: "West Virginia", abrev: "WV")
+State.create(name: "Wisconsin", abrev: "WI")
+State.create(name: "Wyoming", abrev: "WY")
