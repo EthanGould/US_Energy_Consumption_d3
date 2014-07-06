@@ -26,9 +26,12 @@
             <img class='state-pic' src=<%=@state.url%> alt='state-pic'>
           </div>
           <ul class="nav nav-pills nav-stacked">
-            <li><a href='#'>Electricity</a></li>
-            <li><a href='#'>Petroleum</a></li>
-            <li><a href='#'>Coal</a></li>
+            <li id="GETCB"><a href='#'>Geothermal</a></li>
+            <li id="SOTCB"><a href='#'>Solar</a></li>
+            <li id="WYTCB"><a href='#'>Wind</a></li>
+            <li id="PATCB"><a href='#'>Petroleum</a></li>
+            <li id="CLTCB"><a href='#'>Coal</a></li>
+            <li id="WWTCB"><a href='#'>Coal</a></li>
           </ul>
           <div>
             <%= form_tag root_path, method: :get do %>
