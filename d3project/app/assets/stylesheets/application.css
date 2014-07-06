@@ -1,23 +1,32 @@
 h2{
   margin: 0 auto;
+  margin-top: 100px;
   text-align: center;
 }
 .search{
   margin: 0 auto;
-  max-width: 250px;
+  margin-top: 40px;
+  max-width: 400px;
   margin-bottom: 30px;
 }
+#search{
+  margin-top: 10px;
+  width: 80%;
+}
 .nav-stacked{
-  margin-top: 100px;
+  margin-top: 150px;
 }
 .menu-well{
   margin-top: 100px;
 }
 .state-pic{
-  width: 100%;
+  width: 100px;
 }
 text{
   transform:rotate(10deg);
   -ms-transform:rotate(10deg); /* IE 9 */
   -webkit-transform:rotate(10deg); /* Opera, Chrome, and Safari */
+}
+.btn{
+  padding: 2px;
 }
