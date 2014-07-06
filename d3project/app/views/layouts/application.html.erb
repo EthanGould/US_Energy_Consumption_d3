@@ -17,17 +17,25 @@
   <%= csrf_meta_tags %>
 
 </head>
-<body ng-controller="ProjectController">
+<body>
   <div class='container'>
     <div class='row'>
-      <div class='col-md-2'>
+      <div class='col-md-3'>
         <div class='well menu-well'>
-          <img class='state-pic' src=<%=@state.url%> alt='state-pic'>
+          <div class='col-md-10 col-md-offset-1'>
+            <img class='state-pic' src=<%=@state.url%> alt='state-pic'>
+          </div>
           <ul class="nav nav-pills nav-stacked">
             <li><a href='#'>Electricity</a></li>
             <li><a href='#'>Petroleum</a></li>
             <li><a href='#'>Coal</a></li>
           </ul>
+          <div>
+            <%= form_tag root_path, method: :get do %>
+              <%= text_field_tag :search, nil, placeholder: "search for a state... " %>
+              <%= submit_tag "GO", class: 'btn btn-info' %>
+            <% end %>
+          </div>
         </div>
       </div>
     <%= yield %>
