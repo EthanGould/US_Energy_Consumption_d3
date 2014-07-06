@@ -23,9 +23,13 @@ window.onload = function() {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var data = d3.json("http://localhost:3000/show", function(error, dataPair) {
+  var data = d3.json("http://localhost:3000/energy_call", function(error, dataPair) {
     x.domain(dataPair.map(function(d) { return d.year; }));
     y.domain([0, d3.max(dataPair, function(d) { return d.amount; })]);
+
+    colorScale = d3.scale.linear()
+    .domain([2000, 5000]) // 0 is red 60 blue
+    .range(['orange', 'red']);
 
     chart.append("g")
         .attr("class", "x axis")
@@ -40,7 +44,7 @@ window.onload = function() {
         .data(dataPair)
       .enter().append("rect")
         .attr("class", "bar")
-        .style("fill", "tomato")
+        .attr("fill", function(d) {return colorScale(d.amount ); })
         .transition()
         .attr("y", - 500)
         .transition()
