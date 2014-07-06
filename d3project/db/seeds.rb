@@ -1,5 +1,5 @@
 State.create(name: "ALABAMA", abrev: "AL", url: "http://www.ancestry.com/wiki/images/archive/c/ca/20100415182343!Alabama_sil.png")
-State.create(name: "ALASKA", abrev: "AK", url: "http://i.ebayimg.com/00/s/NDIwWDU3Ng==/z/VP8AAOxyE-dRy2~-/$T2eC16JHJHsFGlGzglvJBRy2+-WL2Q~~60_35.png")
+State.create(name: "ALASKA", abrev: "AK", url: "http://www.ancestry.com/wiki/images/9/92/Alaska_sil.png")
 State.create(name: "ARIZONA", abrev: "AZ", url: "http://www.ancestry.com/wiki/images/f/f5/Arizona_sil.png")
 State.create(name: "ARKANSAS", abrev: "AR", url: "http://www.ancestry.com/wiki/images/b/b0/Arkansas_sil.png")
 State.create(name: "CALIFORNIA", abrev: "CA", url: "http://www.ancestry.com/wiki/images/6/65/California_sil.png")
