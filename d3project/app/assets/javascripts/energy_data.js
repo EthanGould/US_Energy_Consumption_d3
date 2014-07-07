@@ -1,7 +1,7 @@
 window.onload = function() {
-    var margin = {top: 20, right: 30, bottom: 30, left: 60},
-      width = 600 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+  var margin = {top: 20, right: 30, bottom: 30, left: 60},
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1);
@@ -23,13 +23,13 @@ window.onload = function() {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var data = d3.json("http://localhost:3000/energy_call", function(error, dataPair) {
+  var data = d3.json("http://localhost:3000/energy_call?state=AL&energy_source=PATCB", function(error, dataPair) {
     x.domain(dataPair.map(function(d) { return d.year; }));
     y.domain([0, d3.max(dataPair, function(d) { return d.amount; })]);
 
     colorScale = d3.scale.linear()
     .domain([2000, 5000]) // 0 is red 60 blue
-    .range(['orange', 'red']);
+    .range(['black', 'red']);
 
     chart.append("g")
         .attr("class", "x axis")
