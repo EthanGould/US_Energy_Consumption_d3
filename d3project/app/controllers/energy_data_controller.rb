@@ -1,14 +1,11 @@
 class EnergyDataController < ApplicationController
-  # respond_to :json
-  # GET /energy_data
-  # GET /energy_data.json
+
   def index
     if params[:search].present?
       @state = (State.find_by abrev:(params[:search].upcase)) || (State.find_by name:(params[:search].upcase))
     else
       @state = State.first
     end
-    @@search = @state.abrev
   end
 
 
@@ -22,7 +19,9 @@ class EnergyDataController < ApplicationController
   end
 
   def energy_call
-    call = EnergyDatum.get_energy_type("AK", "NGPZB")
+    state_code = params["state"]
+    source = params["energy_source"]
+    call = EnergyDatum.get_energy_type(state_code, source)
     energy_array = call["series"][0]["data"][0..11]
     data = data_to_hash(energy_array)
     render json: data
