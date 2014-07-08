@@ -2,9 +2,23 @@ class State < ActiveRecord::Base
   has_many :energy_data
 
   def request_energy_data
+    # Invalid data currently on requests for:
+    # Rhode Island
+    # Vermont
+    # Idaho
+    # http://www.eia.gov/beta/api/qb.cfm?category=870
+    # Seems data doesn't exist for some of the states
+
     api_request_url = "http://api.eia.gov/series/?api_key=#{ENV["API_KEY"]}&series_id=ELEC.CONS_TOT.COW-#{self.abrev}-98.A"
     api_results = HTTParty.get(api_request_url)
-    energy_data = api_results["series"][0]["data"]
+    puts self.name
+    puts api_results
+    if api_results['data']
+      puts "Invalid Series ID. Why?"
+      return []
+    else
+      api_results["series"][0]["data"]
+    end
   end
 
   # This will attempt to save energy data
