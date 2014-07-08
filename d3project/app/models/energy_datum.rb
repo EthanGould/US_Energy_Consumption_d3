@@ -1,4 +1,5 @@
 class EnergyDatum < ActiveRecord::Base
+  belongs_to :state
 
   @api_key = ENV["API_KEY"]
 
