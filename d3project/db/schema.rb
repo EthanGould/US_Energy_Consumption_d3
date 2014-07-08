@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140705010329) do
+ActiveRecord::Schema.define(version: 20140708193423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20140705010329) do
   create_table "energy_data", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "amount"
+    t.integer  "year"
   end
 
   create_table "states", force: true do |t|
