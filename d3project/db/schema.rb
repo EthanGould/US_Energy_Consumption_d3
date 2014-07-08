@@ -27,9 +27,4 @@ ActiveRecord::Schema.define(version: 20140705010329) do
     t.text   "url"
   end
 
-  create_table "states_tables", force: true do |t|
-    t.text "name"
-    t.text "abrev"
-  end
-
 end

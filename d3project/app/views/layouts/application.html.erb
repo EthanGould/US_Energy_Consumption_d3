@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="ProjectApp">
+<html>
 <head>
   <title>D3project</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
   <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>
 
   <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -18,27 +14,7 @@
 <body>
   <div class='container'>
     <div class='row'>
-      <div class='col-md-3'>
-        <div class='well menu-well'>
-          <div class='col-md-10 col-md-offset-1'>
-            <img class='state-pic' src=<%=@state.url%> alt='state-pic'>
-          </div>
-          <ul class="nav nav-pills nav-stacked">
-            <li id="GETCB" class="filter-button"><a href='#'>Geothermal</a></li>
-            <li id="SOTCB" class="filter-button"><a href='#'>Solar</a></li>
-            <li id="WYTCB" class="filter-button"><a href='#'>Wind</a></li>
-            <li id="PATCB" class="filter-button"><a href='#'>Petroleum</a></li>
-            <li id="CLTCB" class="filter-button"><a href='#'>Coal</a></li>
-            <li id="WWTCB" class="filter-button"><a href='#'>Coal</a></li>
-          </ul>
-          <div>
-            <%= form_tag root_path, method: :get do %>
-              <%= text_field_tag :search, nil, placeholder: "search for a state... " %>
-              <%= submit_tag "GO", class: 'btn btn-info' %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+    <%= render 'layouts/left_nav' %>
     <%= yield %>
     </div>
   </div>

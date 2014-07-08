@@ -1,62 +1,33 @@
-window.onload = function() {
-  var margin = {top: 20, right: 30, bottom: 30, left: 60},
-    width = 600 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+$(document).ready(function(){
+  $('.btn-info').on('click', App.getData);
+  // $('form').on('submit', App.getData);
+});
+var App = App || {};
 
-  var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], 0.1);
+App.getURLParameter = function (param){
+  return decodeURI((RegExp(param + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+};
 
-  var y = d3.scale.linear()
-      .range([height, 0]);
+App.getData = function(){
 
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  var chart = d3.select(".chart")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var data = d3.json("http://localhost:3000/energy_call?state=AL&energy_source=PATCB", function(error, dataPair) {
-    x.domain(dataPair.map(function(d) { return d.year; }));
-    y.domain([0, d3.max(dataPair, function(d) { return d.amount; })]);
-
-    colorScale = d3.scale.linear()
-    .domain([2000, 5000]) // 0 is red 60 blue
-    .range(['black', 'red']);
-
-    chart.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    chart.selectAll(".bar")
-        .data(dataPair)
-      .enter().append("rect")
-        .attr("class", "bar")
-        .attr("fill", function(d) {return colorScale(d.amount ); })
-        .transition()
-        .attr("y", - 500)
-        .transition()
-        .duration(1000)
-        .attr("x", function(d) { return x(d.year); })
-        .attr("y", function(d) { return y(d.amount); })
-        .attr("height", function(d) { return height - y(d.amount) ; })
-        .attr("width", x.rangeBand());
-  });
-
-  function type(d) {
-    d.amount = +d.amount; // coerce to number
-    return d;
+  $('state-search').on('ajax:success'){
+    var api_key = "18AB54E6F91CCCB8A299192515814BDE";
+    var state = App.getURLParameter(state);
+    // var source = App.getURLParameter(source);
+    $.ajax({
+              type: "GET",
+              url: "http://api.eia.gov/series/?api_key=" + api_key + "&series_id=ELEC.CONS_TOT.COW-" + state + "-98.A",
+              dataType: 'json',
+              success: function(result){
+                var d3Data = result.series[0].data;
+                console.log(App.arrayToHash(d3Data));
+              } // success function
+            }); // end ajax
   }
+};
+
+App.arrayToHash = function(array){
+  var returnHash = {};
+  array.forEach(function(val, i){ returnHash[val[0]] = val[1]; });
+  return returnHash;
 };

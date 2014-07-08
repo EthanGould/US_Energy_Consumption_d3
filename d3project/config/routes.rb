@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
+  resources :states, only: [:index, :show]
 
-  root to: 'energy_data#index'
-  get '/show', to: 'energy_data#show'
-  get '/energy_call', to: 'energy_data#energy_call'
-  get '/json', to: 'energy_data#api_json'
-
+  root to: 'energy_data#show'
 end

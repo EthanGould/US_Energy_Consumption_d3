@@ -1,0 +1,21 @@
+<div class='col-md-3'>
+  <div class='well menu-well'>
+    <div class='col-md-10 col-md-offset-1'>
+
+    </div>
+    <ul class="nav nav-pills nav-stacked">
+      <li id="GETCB" class="filter-button"><%= link_to( "Geothermal", url_options = {source: "GETCB"})%></li>
+      <li id="SOTCB" class="filter-button"><%= link_to( "Solar", url_options = {source: "SOTCB"}) %></li>
+      <li id="WYTCB" class="filter-button"><%= link_to( "Wind", url_options = {source: "WYTCB"}) %></li>
+      <li id="PATCB" class="filter-button"><%= link_to( "Petroleum", url_options = {source: "PATCB"}) %></li>
+      <li id="CLTCB" class="filter-button"><%= link_to( "Coal", url_options = {source: "CLTCB"}) %></li>
+    </ul>
+    <div>
+      <%= form_tag root_path do %>
+        <%= text_field_tag :state, nil, placeholder: "search for a state... " %>
+        <%= hidden_field_tag :source, "GETCB" %>
+        <%= submit_tag "GO", class: 'btn btn-info' %>
+      <% end %>
+    </div>
+  </div>
+</div>
