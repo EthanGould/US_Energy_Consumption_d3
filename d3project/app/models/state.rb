@@ -1,3 +1,24 @@
 class State < ActiveRecord::Base
   has_many :energy_data
+
+  def request_energy_data
+    api_request_url = "http://api.eia.gov/series/?api_key=#{ENV["API_KEY"]}&series_id=ELEC.CONS_TOT.COW-#{self.abrev}-98.A"
+    api_results = HTTParty.get(api_request_url)
+    energy_data = api_results["series"][0]["data"]
+  end
+
+  # This will attempt to save energy data
+  # Does not overwrite old data
+  # In either case, it will return a set of energy data for the state
+  def request_and_save_energy_data
+    energy_by_year = self.request_energy_data
+    energy_by_year.each do |data_point|
+      begin
+      self.energy_data.create(year: data_point[0], amount: data_point[1])
+      rescue ActiveRecord::RecordNotUnique
+        puts "Energy data already saved for #{self.abrev} in #{data_point[0]} "
+      end
+    end
+    self.energy_data
+  end
 end
