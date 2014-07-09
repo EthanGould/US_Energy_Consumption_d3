@@ -14,4 +14,14 @@ class StatesController < ApplicationController
       format.json { render json: @state }
     end
   end
+
+  def image_url
+    temp = State.where(abrev: params[:state_abbreviation])
+    if temp.size == 1
+      @state = temp.first
+    else
+      flash[:error] = "Could not find state"
+      redirect_to state_path
+    end
+  end
 end
