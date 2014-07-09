@@ -9,8 +9,6 @@ App.getURLParameter = function (param){
 };
 
 App.getData = function(){
-
-  $('state-search').on('ajax:success'){
     var api_key = "18AB54E6F91CCCB8A299192515814BDE";
     var state = App.getURLParameter(state);
     // var source = App.getURLParameter(source);
@@ -23,7 +21,6 @@ App.getData = function(){
                 console.log(App.arrayToHash(d3Data));
               } // success function
             }); // end ajax
-  }
 };
 
 App.arrayToHash = function(array){

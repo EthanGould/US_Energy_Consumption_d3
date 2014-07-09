@@ -14,10 +14,6 @@ class EnergyDataController < ApplicationController
   end
 
   def show
-    @search_state = ((State.find_by abrev:(params[:state].upcase)) || (State.find_by name:(params[:state].upcase))) || (State.last)
-    @state = params[:state]
-    source = params[:source]
-    binding.pry
   end
 
   private
