@@ -1,7 +1,7 @@
 <div class='col-md-3'>
   <div class='well menu-well'>
     <div class='col-md-10 col-md-offset-1'>
-      <%=image_tag 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/t1.0-1/p48x48/10455766_657348364314222_7463937380643555250_n.jpg', id: 'state_image', class: "state-pic" %>
+      <%=image_tag 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/t1.0-1/p48x48/10455766_657348364314222_7463937380643555250_n.jpg', id: 'state-image', class: "state-pic" %>
     </div>
     <ul class="nav nav-pills nav-stacked">
       <li id="GETCB" class="filter-button"><%= link_to "Geothermal"%></li>
@@ -19,13 +19,12 @@
 
 <script>
 $('#state').change(function(){
-  console.log($(this).children(':selected').val());
+  // console.log($(this).children(':selected').val());
   var state_abrv = $(this).children(':selected').val();
-  // alert($(this).children(':selected'));
   $.get( "states/image_url/" + state_abrv, function( data ) {
     console.log(data.state_abbreviation);
 
-    $("#state_image").attr("src", data.image_url);
+    $("#state-image").attr("src", data.image_url);
     $(".chart-title").text("Metric tons of coal used in " + data.state_name);
   });
 });
