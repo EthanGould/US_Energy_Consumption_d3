@@ -1,0 +1,17 @@
+As a user, when I hit the front page I should see a energy-populated cloropleth d3 graph of the United States
+
+When I click on a state, I should be taken to a show page for that state
+
+On a states show page I should see a labeled bar chart for energy type of coal
+
+On a states show page I should see an image of the states
+
+On a states show page I should see an option to compare different energy types
+
+When I click on a energy filter, I should see the chart repopulate with the respective data for the energy filter type
+
+When I select 2 filter to compare (on same chart) I should see the chart populate with data from both filters each in a different color
+
+When I clear the filter the chart should default back to showing only data for coal on the current state
+
+When I click the 'back' button I should be redirected to the front page ^^
