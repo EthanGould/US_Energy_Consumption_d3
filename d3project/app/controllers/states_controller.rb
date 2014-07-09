@@ -18,4 +18,8 @@ class StatesController < ApplicationController
   def image_url
     @state = State.where(abrev: params[:state_abbreviation].upcase).first
   end
+
+  def state_data
+    @state = State.where(abrev: params[:state_abbreviation].upcase).first
+  end
 end

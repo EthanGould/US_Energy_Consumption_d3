@@ -18,7 +18,7 @@
 
 
 <script>
-$('#state').change(function(){
+$('#state').change(function(){ // watches for a change in the state selection
   // console.log($(this).children(':selected').val());
   var state_abrv = $(this).children(':selected').val();
   $.get( "states/image_url/" + state_abrv, function( data ) {
