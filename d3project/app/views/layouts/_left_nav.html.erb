@@ -4,14 +4,15 @@
       <%=image_tag 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/t1.0-1/p48x48/10455766_657348364314222_7463937380643555250_n.jpg', id: 'state-image', class: "state-pic" %>
     </div>
     <ul class="nav nav-pills nav-stacked">
-      <li id="GETCB" class="filter-button"><%= link_to "Geothermal"%></li>
-      <li id="SOTCB" class="filter-button"><%= link_to "Solar"%></li>
-      <li id="WYTCB" class="filter-button"><%= link_to "Wind"%></li>
-      <li id="PATCB" class="filter-button"><%= link_to "Petroleum" %></li>
-      <li id="CLTCB" class="filter-button"><%= link_to "Coal"%></li>
+      <li id="GE" class="filter-button"><%= link_to "Geothermal"%></li>
+      <li id="SO" class="filter-button"><%= link_to "Solar"%></li>
+      <li id="WY" class="filter-button"><%= link_to "Wind"%></li>
+      <li id="PA" class="filter-button"><%= link_to "Petroleum" %></li>
+      <li id="CL" class="filter-button"><%= link_to "Coal"%></li>
     </ul>
     <div>
       <%= select_tag "state" , options_from_collection_for_select(State.all, "abrev", "name")%>
+      <input id="current-state" type="hidden" value="Ethan">
     </div>
   </div>
 </div>

@@ -2,12 +2,14 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function(){
   $('#state').change(App.callAPI);
+  $(".filter-button").click(App.filterResults);
 });
 
 var App = App || {};
 
 App.callAPI = function(){
     var state_abrv = $(this).children(':selected').val();
+    $("#current-state").val(state_abrv);
     $.get( "states/image_url/" + state_abrv, function( data ) {
       console.log(data.state_abbreviation);
 
@@ -16,14 +18,22 @@ App.callAPI = function(){
     });
 
     $.get("states/state_data/" + state_abrv, function(data){
-      var dataArray = data.energy_data;
+      var dataArray = data.energy_data.PA;
       var dataSpread = App.getMaxNumber(dataArray);
       App.makeChart(dataSpread);
     });
 };
-// var data = (dataObject, function(error, dataObject) {
-//     x.domain(dataObject.forEach(function(d) {return d.year; }));
-//     y.domain([0, d3.max(dataObject, function(d) { return d.amount; })]);
+
+App.filterResults = function(){
+  var state_abrv = $("#current-state").val(); // drop down child :selected
+  var tmp_filter = this.id;
+  $.get("states/state_data/" + state_abrv, function(data){
+      var dataArray = data.energy_data[tmp_filter];
+      var dataSpread = App.getMaxNumber(dataArray);
+      App.makeChart(dataSpread);
+    });
+
+};
 
 App.getMaxNumber = function(energyData){
   var min = Number.POSITIVE_INFINITY;
@@ -39,6 +49,7 @@ App.getMaxNumber = function(energyData){
 };
 
 App.makeChart = function(energyData){
+
   var $one = $('.chart').find('#2013');
   var $two = $('.chart').find('#2012');
   var $three = $('.chart').find('#2011');
@@ -53,18 +64,18 @@ App.makeChart = function(energyData){
   var $twelv = $('.chart').find('#2002');
   var $thirt = $('.chart').find('#2001');
 
-  $one.attr('style', 'width:' + (energyData[2][0].amount/(energyData[0] * 0.05) + '%') );
-  $two.attr('style', 'width:' + (energyData[2][1].amount/(energyData[0] * 0.05) + '%') );
-  $three.attr('style', 'width:' + (energyData[2][2].amount/(energyData[0] * 0.05) + '%') );
-  $four.attr('style', 'width:' + (energyData[2][3].amount/(energyData[0] * 0.05) + '%') );
-  $five.attr('style', 'width:' + (energyData[2][4].amount/(energyData[0] * 0.05) + '%') );
-  $six.attr('style', 'width:' + (energyData[2][5].amount/(energyData[0] * 0.05) + '%') );
-  $seven.attr('style', 'width:' + (energyData[2][6].amount/(energyData[0] * 0.05) + '%') );
-  $eight.attr('style', 'width:' + (energyData[2][7].amount/(energyData[0] * 0.05) + '%') );
-  $nine.attr('style', 'width:' + (energyData[2][8].amount/(energyData[0] * 0.05) + '%') );
-  $ten.attr('style', 'width:' + (energyData[2][9].amount/(energyData[0] * 0.05) + '%') );
-  $elev.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.05) + '%') );
-  $twelv.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.05) + '%') );
-  $thirt.attr('style', 'width:' + (energyData[2][11].amount/(energyData[0] * 0.05) + '%') );
+  $one.attr('style', 'width:' + (energyData[2][0].amount/(energyData[0] * 0.01) + '%') );
+  $two.attr('style', 'width:' + (energyData[2][1].amount/(energyData[0] * 0.01) + '%') );
+  $three.attr('style', 'width:' + (energyData[2][2].amount/(energyData[0] * 0.01) + '%') );
+  $four.attr('style', 'width:' + (energyData[2][3].amount/(energyData[0] * 0.01) + '%') );
+  $five.attr('style', 'width:' + (energyData[2][4].amount/(energyData[0] * 0.01) + '%') );
+  $six.attr('style', 'width:' + (energyData[2][5].amount/(energyData[0] * 0.01) + '%') );
+  $seven.attr('style', 'width:' + (energyData[2][6].amount/(energyData[0] * 0.01) + '%') );
+  $eight.attr('style', 'width:' + (energyData[2][7].amount/(energyData[0] * 0.01) + '%') );
+  $nine.attr('style', 'width:' + (energyData[2][8].amount/(energyData[0] * 0.01) + '%') );
+  $ten.attr('style', 'width:' + (energyData[2][9].amount/(energyData[0] * 0.01) + '%') );
+  $elev.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.01) + '%') );
+  $twelv.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.01) + '%') );
+  $thirt.attr('style', 'width:' + (energyData[2][11].amount/(energyData[0] * 0.01) + '%') );
 
 };
