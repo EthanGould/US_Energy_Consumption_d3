@@ -12,20 +12,13 @@ App.callAPI = function(){
     $("#current-state").val(state_abrv);
     $.get( "states/image_url/" + state_abrv, function( data ) {
       console.log(data.state_abbreviation);
-
       $("#state-image").attr("src", data.image_url);
-      $(".chart-title").text("Metric tons of coal used in " + data.state_name);
-    });
-
-    $.get("states/state_data/" + state_abrv, function(data){
-      var dataArray = data.energy_data.PA;
-      var dataSpread = App.getMaxNumber(dataArray);
-      App.makeChart(dataSpread);
+      // $(".chart-title").text("Metric tons of energy from  used in " + data.state_name);
     });
 };
 
 App.filterResults = function(){
-  var state_abrv = $("#current-state").val(); // drop down child :selected
+  var state_abrv = $("#current-state").val();
   var tmp_filter = this.id;
   $.get("states/state_data/" + state_abrv, function(data){
       var dataArray = data.energy_data[tmp_filter];
@@ -50,32 +43,11 @@ App.getMaxNumber = function(energyData){
 
 App.makeChart = function(energyData){
 
-  var $one = $('.chart').find('#2013');
-  var $two = $('.chart').find('#2012');
-  var $three = $('.chart').find('#2011');
-  var $four = $('.chart').find('#2010');
-  var $five = $('.chart').find('#2009');
-  var $six = $('.chart').find('#2008');
-  var $seven = $('.chart').find('#2007');
-  var $eight = $('.chart').find('#2006');
-  var $nine = $('.chart').find('#2005');
-  var $ten = $('.chart').find('#2004');
-  var $elev = $('.chart').find('#2003');
-  var $twelv = $('.chart').find('#2002');
-  var $thirt = $('.chart').find('#2001');
-
-  $one.attr('style', 'width:' + (energyData[2][0].amount/(energyData[0] * 0.01) + '%') );
-  $two.attr('style', 'width:' + (energyData[2][1].amount/(energyData[0] * 0.01) + '%') );
-  $three.attr('style', 'width:' + (energyData[2][2].amount/(energyData[0] * 0.01) + '%') );
-  $four.attr('style', 'width:' + (energyData[2][3].amount/(energyData[0] * 0.01) + '%') );
-  $five.attr('style', 'width:' + (energyData[2][4].amount/(energyData[0] * 0.01) + '%') );
-  $six.attr('style', 'width:' + (energyData[2][5].amount/(energyData[0] * 0.01) + '%') );
-  $seven.attr('style', 'width:' + (energyData[2][6].amount/(energyData[0] * 0.01) + '%') );
-  $eight.attr('style', 'width:' + (energyData[2][7].amount/(energyData[0] * 0.01) + '%') );
-  $nine.attr('style', 'width:' + (energyData[2][8].amount/(energyData[0] * 0.01) + '%') );
-  $ten.attr('style', 'width:' + (energyData[2][9].amount/(energyData[0] * 0.01) + '%') );
-  $elev.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.01) + '%') );
-  $twelv.attr('style', 'width:' + (energyData[2][10].amount/(energyData[0] * 0.01) + '%') );
-  $thirt.attr('style', 'width:' + (energyData[2][11].amount/(energyData[0] * 0.01) + '%') );
-
+  $('.chart-title').text(energyData[2][0].name); //make div alert for not enough data if max < than X
+  $('.bar-chart').empty();
+  var yearAmount = energyData[2];
+    yearAmount.forEach(function(set){
+     var $aYear = $('<div>').attr('id', set.year).attr('class', 'bar').attr('style', 'width:' + set.amount*0.02 + "%");
+     $('.bar-chart').append($aYear);
+    });
 };

@@ -32,8 +32,9 @@ h3{
    0% { width: 0; }
 }
 .bar{
-  -webkit-animation: bar  2s;
-  -moz-animation: bar 2s;
+  height: 5px;
+  background-color: blue;
+  margin-top: 2px;
 }
 .chart > div {
   height: 30px;
@@ -42,7 +43,7 @@ h3{
 }
 .bar-chart{
   margin: 0 auto;
-  max-width: 300px;
+  max-width: 500px;
   transform:rotate(-90deg);
   -ms-transform:rotate(-90deg); /* IE 9 */
   -webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
