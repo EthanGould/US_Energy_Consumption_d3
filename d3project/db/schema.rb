@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708194507) do
+ActiveRecord::Schema.define(version: 20140710021941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,9 +22,11 @@ ActiveRecord::Schema.define(version: 20140708194507) do
     t.decimal  "amount"
     t.integer  "year"
     t.integer  "state_id"
+    t.string   "name"
+    t.text     "description"
   end
 
-  add_index "energy_data", ["state_id", "year"], name: "index_energy_data_on_state_id_and_year", unique: true, using: :btree
+  add_index "energy_data", ["state_id", "year", "name"], name: "index_energy_data_on_state_id_and_year_and_name", unique: true, using: :btree
   add_index "energy_data", ["state_id"], name: "index_energy_data_on_state_id", using: :btree
 
   create_table "states", force: true do |t|
