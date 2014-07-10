@@ -21,7 +21,5 @@ class StatesController < ApplicationController
 
   def state_data
     @state = State.where(abrev: params[:state_abbreviation].upcase).first
-
-    binding.pry
   end
 end

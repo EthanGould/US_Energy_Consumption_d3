@@ -28,7 +28,7 @@ class State < ActiveRecord::Base
       else
         api_results["series"].each do |data_set|
           data_set["data"].each do |pair|
-            EnergyDatum.create!(name: data_set["name"], description: data_set["descrition"], state_id: self.id, year: pair[0], amount: pair[1])
+            EnergyDatum.create!(series_id: type, name: data_set["name"], description: data_set["descrition"], state_id: self.id, year: pair[0], amount: pair[1])
           end
         end
       end
