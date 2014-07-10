@@ -1,4 +1,4 @@
-h2{
+h3{
   margin: 0 auto;
   margin-top: 100px;
   text-align: center;
@@ -22,11 +22,28 @@ h2{
 .state-pic{
   width: 100px;
 }
-text{
-  transform:rotate(10deg);
-  -ms-transform:rotate(10deg); /* IE 9 */
-  -webkit-transform:rotate(10deg); /* Opera, Chrome, and Safari */
-}
 .btn{
   padding: 2px;
+}
+@-webkit-keyframes bar {
+   0% { width: 0; }
+}
+@-moz-keyframes bar {
+   0% { width: 0; }
+}
+.bar{
+  -webkit-animation: bar  2s;
+  -moz-animation: bar 2s;
+}
+.chart > div {
+  height: 30px;
+  background-color: green;
+  margin-top: 2px;
+}
+.bar-chart{
+  margin: 0 auto;
+  max-width: 300px;
+  transform:rotate(-90deg);
+  -ms-transform:rotate(-90deg); /* IE 9 */
+  -webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
 }

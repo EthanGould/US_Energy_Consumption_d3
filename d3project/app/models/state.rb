@@ -1,6 +1,6 @@
 class State < ActiveRecord::Base
   has_many :energy_data
-
+    # self = an instance of a state in Active Record DB (like 'this')
   def request_energy_data
     # Invalid data currently on requests for:
     # Rhode Island
@@ -8,16 +8,30 @@ class State < ActiveRecord::Base
     # Idaho
     # http://www.eia.gov/beta/api/qb.cfm?category=870
     # Seems data doesn't exist for some of the states
+    # SEDS.HYTXB.AL.A - hydro electricity,
+    # SEDS.WYTXB.AL.A - wind energy
+    # SEDS.GETXB.AL.A - geothermal
+    # SEDS.CLTXB.AL.A - coal
+    # SEDS.SOTXB.AL.A - solar
+    # SEDS.PATXB.AL.A - petroleum
+    types = ["HY", "WY", "GE", "CL", "SO", "PA"]
 
-    api_request_url = "http://api.eia.gov/series/?api_key=#{ENV["API_KEY"]}&series_id=ELEC.CONS_TOT.COW-#{self.abrev}-98.A"
-    api_results = HTTParty.get(api_request_url)
-    puts self.name
-    puts api_results
-    if api_results['data']
-      puts "Invalid Series ID. Why?"
-      return []
-    else
-      api_results["series"][0]["data"]
+    types.each do |type|
+      tmp_series_id = "SEDS.#{type}TXB.#{self.abrev}.A"
+      api_request_url = "http://api.eia.gov/series/?api_key=#{ENV["API_KEY"]}&series_id=#{tmp_series_id}"
+      api_results = HTTParty.get(api_request_url)
+      puts self.name
+      puts api_results
+      puts " "
+      if api_results['data']
+        puts "Invalid Series ID. Why?"
+      else
+        api_results["series"].each do |data_set|
+          data_set["data"].each do |pair|
+            EnergyDatum.create!(name: data_set["name"], description: data_set["descrition"], state_id: self.id, year: pair[0], amount: pair[1])
+          end
+        end
+      end
     end
   end
 
@@ -36,5 +50,5 @@ class State < ActiveRecord::Base
     self.energy_data
   end
 
-  STATES = ['Select a state','AL','AK','AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY']
+  # STATES = ['Select a state','AL','AK','AZ', 'AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY']
 end
