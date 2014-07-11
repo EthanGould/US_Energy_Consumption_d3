@@ -3,6 +3,7 @@
 $(document).ready(function(){
   $('#state').change(App.callAPI);
   $(".filter-button").click(App.filterResults);
+  $(".filter-button").click(App.compareResults);
 });
 
 var App = App || {};
@@ -28,26 +29,59 @@ App.filterResults = function(){
 
 };
 
+App.compareResults = function(){
+  var state_abrv = $("#current-state").val();
+  $.get("states/all_states" ){/// sometjing more here)
+      var dataArray = data.energy_data[tmp_filter];
+      var dataSpread = App.getMaxNumber(dataArray);
+      App.makeChart(dataSpread);
+    };
+};
+
 App.getMaxNumber = function(energyData){
   var min = Number.POSITIVE_INFINITY;
   var max = Number.NEGATIVE_INFINITY;
+  var sum = 0;
   var tmp;
   for (var i=energyData.length-1; i>=0; i--) {
     tmp = energyData[i].amount;
       if (tmp < min) min = tmp;
       if (tmp > max) max = tmp;
   }
-  console.log(max, min);
-  return [max, min, energyData];
+  energyData.forEach(function(set){
+    sum += sum + parseInt(set.amount);
+  });
+  var avg = (sum/((energyData.length*100000000000000))).toFixed(2);
+  console.log(max, min, avg);
+  return [max, min, avg, energyData];
 };
 
 App.makeChart = function(energyData){
 
-  $('.chart-title').text(energyData[2][0].name); //make div alert for not enough data if max < than X
+  var max = energyData[0];
+  var min = energyData[1];
+  var avg = energyData[2];
+
+  $('#max').text("Max: " + max + " Btu");
+  $('#min').text("Min: " + min + " Btu");
+  $('#avg').text("Average: " + avg + " Btu");
+  $('.chart-title').text(energyData[3][0].name);
   $('.bar-chart').empty();
-  var yearAmount = energyData[2];
-    yearAmount.forEach(function(set){
-     var $aYear = $('<div>').attr('id', set.year).attr('class', 'bar').attr('style', 'width:' + set.amount*0.02 + "%");
-     $('.bar-chart').append($aYear);
-    });
+  if (max > 0) {
+    var yearAmount = energyData[3];
+      yearAmount.forEach(function(set){
+       var $aYear = $('<div>').attr('id', set.year).attr('class', 'bar').attr('style', 'width:' + (set.amount/max)*10 + "%");
+       $('.bar-chart').append($aYear);
+      });
+  }
+  else {
+    var $noData = $("<div><h1>NO DATA</h1></div>").attr('class', 'no-data');
+    $('.bar-chart').append($noData);
+  }
 };
+
+
+
+
+
+

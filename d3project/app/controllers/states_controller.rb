@@ -22,4 +22,8 @@ class StatesController < ApplicationController
   def state_data
     @state = State.where(abrev: params[:state_abbreviation].upcase).first
   end
+
+  def all_state_data
+    @states = State.all
+  end
 end

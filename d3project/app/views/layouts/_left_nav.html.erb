@@ -14,5 +14,15 @@
       <%= select_tag "state" , options_from_collection_for_select(State.all, "abrev", "name")%>
       <input id="current-state" type="hidden" value="AL">
     </div>
+    <br>
+    <div class="search-info">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p id="max">Max: </p>
+          <p id="min">Min: </p>
+          <p id="avg">Average: </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
