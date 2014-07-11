@@ -31,11 +31,9 @@ App.filterResults = function(){
 App.compareResults = function(){
   $('.compare-chart').empty();
   var state_abrv = $("#current-state").val();
-  var all = [];
-  var energyHash = {};
-  var stateHash = {};
   $.get("states/all_state_data/state_data", function(data){
 
+    // attempting to put a comparison chart of each energy source from most current year
     for (var currentState in data){
       state = data[currentState];
       $stateBar = $('<div>').attr('id', currentState);
@@ -58,6 +56,8 @@ App.getMaxNumber = function(energyData){
   var max = Number.NEGATIVE_INFINITY;
   var sum = 0;
   var tmp;
+
+  // finds max and min of passed data values
   for (var i=energyData.length-1; i>=0; i--) {
     tmp = energyData[i].amount;
       if (tmp < min) min = tmp;
@@ -82,6 +82,8 @@ App.makeChart = function(energyData){
   $('#avg').text("Average: " + avg + " Btu");
   $('.chart-title').text(energyData[3][0].name);
   $('.bar-chart').empty();
+
+  // puts the bars on the screen
   if (max > 0) {
     var yearAmount = energyData[3];
       yearAmount.forEach(function(set){
@@ -90,21 +92,7 @@ App.makeChart = function(energyData){
       });
   }
   else {
-    var $noData = $("<div><h1>NO DATA</h1></div>").attr('class', 'no-data');
+    var $noData = $("<div><h1>sorry, no data available for selection</h1></div>").attr('class', 'no-data');
     $('.bar-chart').append($noData);
   }
 };
-
-    // console.log(data);
-    // for (var currentState in data){
-    //   var state = data[currentState];
-    //   for (var source in state) {
-    //     energyHash[source] = state[source];
-    //   }
-    //   stateHash[currentState] = energyHash;
-    // }
-    // console.log(stateHash);
-
-
-
-

@@ -33,6 +33,9 @@ h3{
   -webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
 }
 .no-data{
+  position: relative;
+  top: 230px;
+  text-align: center;
   transform:rotate(90deg);
   -ms-transform:rotate(90deg); /* IE 9 */
   -webkit-transform:rotate(90deg);
