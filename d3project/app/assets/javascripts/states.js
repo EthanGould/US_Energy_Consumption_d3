@@ -14,7 +14,6 @@ App.callAPI = function(){
     $.get( "states/image_url/" + state_abrv, function( data ) {
       console.log(data.state_abbreviation);
       $("#state-image").attr("src", data.image_url);
-      // $(".chart-title").text("Metric tons of energy from  used in " + data.state_name);
     });
 };
 
@@ -30,12 +29,28 @@ App.filterResults = function(){
 };
 
 App.compareResults = function(){
+  $('.compare-chart').empty();
   var state_abrv = $("#current-state").val();
-  $.get("states/all_states" ){/// sometjing more here)
-      var dataArray = data.energy_data[tmp_filter];
-      var dataSpread = App.getMaxNumber(dataArray);
-      App.makeChart(dataSpread);
-    };
+  var all = [];
+  var energyHash = {};
+  var stateHash = {};
+  $.get("states/all_state_data/state_data", function(data){
+
+    for (var currentState in data){
+      state = data[currentState];
+      $stateBar = $('<div>').attr('id', currentState);
+      for (var currentSource in state){
+        amount = state[currentSource];
+        $stateBar.attr('class', currentSource + ' bar');
+        for (var currentAmount in currentSource){
+          $stateBar.attr('style', 'width:' + amount + "%");
+          currentAmount = state[currentSource];
+          $('.compare-chart').append($stateBar);
+        }
+      }
+      console.log($stateBar);
+    }
+  });
 };
 
 App.getMaxNumber = function(energyData){
@@ -80,7 +95,15 @@ App.makeChart = function(energyData){
   }
 };
 
-
+    // console.log(data);
+    // for (var currentState in data){
+    //   var state = data[currentState];
+    //   for (var source in state) {
+    //     energyHash[source] = state[source];
+    //   }
+    //   stateHash[currentState] = energyHash;
+    // }
+    // console.log(stateHash);
 
 
 
