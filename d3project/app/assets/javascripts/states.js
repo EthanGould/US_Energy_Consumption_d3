@@ -23,32 +23,9 @@ App.filterResults = function(){
   $.get("states/state_data/" + state_abrv, function(data){
       var dataArray = data.energy_data[tmp_filter];
       var dataSpread = App.getMaxNumber(dataArray);
-      App.makeChart(dataSpread);
+      App.makeChart(dataArray);
     });
 
-};
-
-App.compareResults = function(){
-  $('.compare-chart').empty();
-  var state_abrv = $("#current-state").val();
-  $.get("states/all_state_data/state_data", function(data){
-
-    // attempting to put a comparison chart of each energy source from most current year
-    for (var currentState in data){
-      state = data[currentState];
-      $stateBar = $('<div>').attr('id', currentState);
-      for (var currentSource in state){
-        amount = state[currentSource];
-        $stateBar.attr('class', currentSource + ' bar');
-        for (var currentAmount in currentSource){
-          $stateBar.attr('style', 'width:' + amount + "%");
-          currentAmount = state[currentSource];
-          $('.compare-chart').append($stateBar);
-        }
-      }
-      console.log($stateBar);
-    }
-  });
 };
 
 App.getMaxNumber = function(energyData){
@@ -68,31 +45,78 @@ App.getMaxNumber = function(energyData){
   });
   var avg = (sum/((energyData.length*100000000000000))).toFixed(2);
   console.log(max, min, avg);
-  return [max, min, avg, energyData];
+  return [max, min, avg];
 };
 
 App.makeChart = function(energyData){
-
-  var max = energyData[0];
-  var min = energyData[1];
-  var avg = energyData[2];
+  analytics = App.getMaxNumber(energyData);
+  console.log(analytics);
+  var max = analytics[0];
+  var min = analytics[1];
+  var avg = analytics[2];
 
   $('#max').text("Max: " + max + " Btu");
   $('#min').text("Min: " + min + " Btu");
   $('#avg').text("Average: " + avg + " Btu");
-  $('.chart-title').text(energyData[3][0].name);
-  $('.bar-chart').empty();
+  $('.chart-title').text(energyData[0].name);
 
-  // puts the bars on the screen
-  if (max > 0) {
-    var yearAmount = energyData[3];
-      yearAmount.forEach(function(set){
-       var $aYear = $('<div>').attr('id', set.year).attr('class', 'bar').attr('style', 'width:' + (set.amount/max)*10 + "%");
-       $('.bar-chart').append($aYear);
-      });
+  $('.chart').empty();
+
+  var values = [];
+
+  barData = energyData.slice(20, -1);
+
+  for (var i=0; i < barData.length; i++){
+    values.push(barData[i].amount);
   }
-  else {
-    var $noData = $("<div><h1>sorry, no data available for selection</h1></div>").attr('class', 'no-data');
-    $('.bar-chart').append($noData);
-  }
+
+  var highestAmount = Math.max.apply(null, values);
+
+var vis = d3.select('.chart'),
+    WIDTH = 500,
+    HEIGHT = 300,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 60
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function(d) {
+      return d.year;
+    }));
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,highestAmount]);
+
+  xAxis = d3.svg.axis()
+    .scale(xRange)
+    .tickValues([1980, 1985, 1990, 1995, 2000, 2005, 2010]);
+
+  yAxis = d3.svg.axis()
+    .scale(yRange)
+    .orient("left");
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function(d) { // sets the x position of the bar
+      return xRange(d.year);
+    })
+    .attr('y', function(d) { // sets the y position of the bar
+      return yRange(d.amount);
+    })
+    .attr('width', "10px") // sets the width of bar
+    .attr('height', function(d) {      // sets the height of bar
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.amount));
+    });
 };
