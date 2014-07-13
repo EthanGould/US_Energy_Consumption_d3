@@ -14,8 +14,6 @@ gem 'angular-rails-templates'
 
 gem 'pry-rails'
 
-gem 'angularjs-rails'
-
 gem 'httparty'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

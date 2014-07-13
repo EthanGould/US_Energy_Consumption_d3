@@ -7,31 +7,26 @@ h3{
 .nav-stacked{
   margin-top: 150px;
 }
+text{
+  transform:rotate(10deg);
+  -ms-transform:rotate(10deg); /* IE 9 */
+  -webkit-transform:rotate(10deg);
+}
 .menu-well{
   margin-top: 100px;
 }
 .state-pic{
   width: 100px;
 }
-@-webkit-keyframes bar {
-   0% { width: 0; }
+rect{
+  fill: rgba(11, 169, 6, 0.5);
+  stroke: green;
 }
-@-moz-keyframes bar {
-   0% { width: 0; }
-}
-.bar{
-  height: 7px;
-  background-color: blue;
-  margin-top: 5px;
-}
-.bar-chart{
-  margin-left: 100px;
-  max-width: 300px;
-  height: 500px;
+/*.chart{
   transform:rotate(-90deg);
-  -ms-transform:rotate(-90deg); /* IE 9 */
-  -webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
-}
+  -ms-transform:rotate(-90deg);
+  -webkit-transform:rotate(-90deg);
+}*/
 .no-data{
   position: relative;
   top: 230px;
