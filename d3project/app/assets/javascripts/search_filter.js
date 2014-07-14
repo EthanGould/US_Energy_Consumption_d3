@@ -1,89 +1,133 @@
 var App = App || {};
 
-App.getURLParameter = function (name) {
-  return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
-
-};
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+$(document).ready(function(){
+  $('#state').change(App.callAPI);
+  $(".filter-button").on('click', App.apiCall );
+  $(".filter-button").click(App.filterResults);
+  $(".filter-button").click(App.compareResults);
+});
 
 App.apiCall = function(e){
   e.preventDefault();
-  var api_key = "18AB54E6F91CCCB8A299192515814BDE";
-  var source = "GETCB";
-  var state = App.getURLParameter('state');
-      state = state.toUpperCase();
-  var request = "http://api.eia.gov/series/?api_key=" + api_key + "&series_id=ELEC.CONS_TOT.COW-" + state + "-98.A";
 };
 
-App.createD3 = function(data_object){
+App.callAPI = function(){
+    var state_abrv = $(this).children(':selected').val();
+    $("#current-state").val(state_abrv);
+    $.get( "states/image_url/" + state_abrv, function( data ) {
+      console.log(data.state_abbreviation);
+      $("#state-image").attr("src", data.image_url);
+    });
+};
 
-  var margin = {top: 20, right: 30, bottom: 30, left: 60},
-    width = 600 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+App.filterResults = function(){
+  var state_abrv = $("#current-state").val();
+  var tmp_filter = this.id;
+  $.get("states/state_data/" + state_abrv, function(data){
+      var dataArray = data.energy_data[tmp_filter];
+      var dataSpread = App.getMaxNumber(dataArray);
+      App.makeChart(dataArray);
+    });
 
-  var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], 0.1);
+};
 
-  var y = d3.scale.linear()
-      .range([height, 0]);
+App.getMaxNumber = function(energyData){
+  var min = Number.POSITIVE_INFINITY;
+  var max = Number.NEGATIVE_INFINITY;
+  var sum = 0;
+  var tmp;
 
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  var chart = d3.select(".filter-chart")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  var state = App.getURLParameter('state');
-      state = state.toUpperCase();
-  var source = App.getURLParameter('source');
-  var data = d3.json("http://localhost:3000/energy_call?state=" + state + "&energy_source=" + source , function(error, dataPair) {
-    x.domain(dataPair.map(function(d) { return d.year; }));
-    y.domain([0, d3.max(dataPair, function(d) { return d.amount; })]);
-
-    colorScale = d3.scale.linear()
-    .domain([200000, 300000]) // 0 is red 60 blue
-    .range(['light green', 'green']);
-
-    chart.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    chart.selectAll(".bar")
-        .data(dataPair)
-      .enter().append("rect")
-        .attr("class", "bar")
-        .attr("fill", function(d) {return colorScale(d.amount ); })
-        .transition()
-        .attr("y", - 500)
-        .transition()
-        .duration(1000)
-        .attr("x", function(d) { return x(d.year); })
-        .attr("y", function(d) { return y(d.amount); })
-        .attr("height", function(d) { return height - y(d.amount) ; })
-        .attr("width", x.rangeBand());
-  });
-
-  function type(d) {
-    d.amount = +d.amount; // coerce to number
-    return d;
+  // finds max and min of passed data values
+  for (var i=energyData.length-1; i>=0; i--) {
+    tmp = energyData[i].amount;
+      if (tmp < min) min = tmp;
+      if (tmp > max) max = tmp;
   }
+  energyData.forEach(function(set){
+    sum += sum + parseInt(set.amount);
+  });
+  var avg = (sum/((energyData.length*100000000000000))).toFixed(2);
+  return [max, min, avg];
 };
 
+App.makeChart = function(energyData){
+  analytics = App.getMaxNumber(energyData);
+  var max = analytics[0];
+  var min = analytics[1];
+  var avg = analytics[2];
 
-$(document).ready(function(){
-  $(".filter-button").on('click', App.apiCall );
-});
+  $('#max').text("Max: " + max + " Btu");
+  $('#min').text("Min: " + min + " Btu");
+  $('#avg').text("Average: " + avg + " Btu");
+  $('.chart-title').text(energyData[0].name);
+
+  $('.chart').empty();
+
+  var values = [];
+
+  barData = energyData.slice(20, -1);
+
+  for (var i=0; i < barData.length; i++){
+    values.push(barData[i].amount);
+  }
+
+  var highestAmount = Math.max.apply(null, values);
+
+var vis = d3.select('.chart'),
+    WIDTH = 500,
+    HEIGHT = 300,
+    MARGINS = {
+      top: 20,
+      right: 20,
+      bottom: 20,
+      left: 60
+    },
+    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function(d) {
+      return d.year;
+    }));
+
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,highestAmount]);
+
+  xAxis = d3.svg.axis()
+    .scale(xRange)
+    .tickValues([1980, 1985, 1990, 1995, 2000, 2005, 2010]);
+
+  yAxis = d3.svg.axis()
+    .scale(yRange)
+    .orient("left");
+
+  vis.append('svg:g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .call(xAxis);
+
+  vis.append('svg:g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+    .call(yAxis);
+
+  vis.selectAll('rect')
+    .data(barData)
+    .enter()
+    .append('rect')
+    .attr('x', function(d) { // sets the x position of the bar
+      return xRange(d.year);
+    })
+    .attr('y', function(d) { // sets the y position of the bar
+      return yRange(d.amount);
+    })
+    .attr('width', "10px") // sets the width of bar
+    .attr("fill", "black")
+    .attr("stroke", "lightgreen")
+    .attr('height', '0px')
+    .transition()
+    .duration(500)
+    .attr('height', function(d) {      // sets the height of bar
+      return ((HEIGHT - MARGINS.bottom) - yRange(d.amount));
+    })
+    .attr("fill", "green")
+    .attr("stroke", "black");
+};
 
