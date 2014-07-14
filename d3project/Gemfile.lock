@@ -31,7 +31,6 @@ GEM
       railties (>= 3.1)
       sprockets
       tilt
-    angularjs-rails (1.2.18)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     coderay (1.1.0)
@@ -137,7 +136,6 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
-  angularjs-rails
   dotenv-rails
   httparty
   jbuilder (~> 2.0)
