@@ -6,9 +6,3 @@
 
   json.set! state.name, most_recent
 end
-
-
-
-
-
-    # json.set! state.name, state.energy_data.where(:series_id => "PA").first

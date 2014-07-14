@@ -23,6 +23,10 @@ class StatesController < ApplicationController
     @state = State.where(abrev: params[:state_abbreviation].upcase).first
   end
 
+  def pie_data
+    @state = State.where(abrev: params[:state_abbreviation].upcase).first
+  end
+
   def all_state_data
     @states = State.all
   end
