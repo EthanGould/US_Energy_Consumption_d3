@@ -12,6 +12,8 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'angular-rails-templates'
 
+gem 'rails_12factor', group: :production
+
 gem 'pry-rails'
 
 gem 'httparty'
