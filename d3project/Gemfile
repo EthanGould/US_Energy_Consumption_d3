@@ -31,3 +31,4 @@ gem 'spring',        group: :development
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
+ruby "2.1.1"
