@@ -57,12 +57,6 @@ App.makeChart = function(energyData){
   var max = analytics[0];
   var min = analytics[1];
 
-  $('#max').text("Max: " + max + " (billion Btu)");
-  $('#min').text("Min: " + min + " (billion Btu)");
-  $('.chart-title').text(energyData[0].name);
-
-  $('.chart').empty();
-
   var values = [];
 
   barData = energyData.slice(20, -1);
@@ -73,6 +67,20 @@ App.makeChart = function(energyData){
 
   var highestAmount = Math.max.apply(null, values);
   var lowestAmount = Math.min.apply(null, values);
+  var avg = (lowestAmount + highestAmount/30).toFixed(0);
+
+  var maxNum = numberWithCommas(highestAmount);
+  var minNum = numberWithCommas(lowestAmount);
+  var avgNum = numberWithCommas(avg);
+
+
+  $('#max').text("Max: " + maxNum + " (Billion Btu)");
+  $('#min').text("Min: " + minNum + " (Billion Btu)");
+  $('#avg').text("Avg: " + avgNum + " (Billion Btu)");
+
+  $('.chart-title').text(energyData[0].name);
+
+  $('.chart').empty();
 
 var vis = d3.select('.chart'),
     WIDTH = 700,
@@ -134,4 +142,7 @@ var vis = d3.select('.chart'),
       .style("fill", function(d){return d.amount == highestAmount ?"red":"green";});
 };
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
