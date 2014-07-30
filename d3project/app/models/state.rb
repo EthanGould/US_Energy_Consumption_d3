@@ -1,13 +1,6 @@
 class State < ActiveRecord::Base
   has_many :energy_data
-    # self = an instance of a state in Active Record DB (like 'this')
   def request_energy_data
-    # Invalid data currently on requests for:
-    # Rhode Island
-    # Vermont
-    # Idaho
-    # http://www.eia.gov/beta/api/qb.cfm?category=870
-    # Seems data doesn't exist for some of the states
     # SEDS.HYTXB.AL.A - hydro electricity,
     # SEDS.WYTXB.AL.A - wind energy
     # SEDS.GETXB.AL.A - geothermal

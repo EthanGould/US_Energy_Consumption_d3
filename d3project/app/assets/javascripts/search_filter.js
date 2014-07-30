@@ -57,8 +57,8 @@ App.makeChart = function(energyData){
   var max = analytics[0];
   var min = analytics[1];
 
-  $('#min').text("Min: " + min + " Btu");
-  $('#max').text("Max: " + max + " Btu");
+  $('#max').text("Max: " + max + " (billion Btu)");
+  $('#min').text("Min: " + min + " (billion Btu)");
   $('.chart-title').text(energyData[0].name);
 
   $('.chart').empty();
@@ -75,8 +75,8 @@ App.makeChart = function(energyData){
   var lowestAmount = Math.min.apply(null, values);
 
 var vis = d3.select('.chart'),
-    WIDTH = 600,
-    HEIGHT = 400,
+    WIDTH = 700,
+    HEIGHT = 500,
     MARGINS = {
       top: 20,
       right: 20,
@@ -118,7 +118,7 @@ var vis = d3.select('.chart'),
     .attr('y', function(d) { // sets the y position of the bar
       return yRange(d.amount);
     })
-    .attr('width', "10px") // sets the width of bar
+    .attr('width', "17px") // sets the width of bar
     .attr("fill", "black")
     .attr("stroke", "lightgreen")
     .attr('height', '0px')
