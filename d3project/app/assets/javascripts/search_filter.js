@@ -6,7 +6,7 @@ $(document).ready(function(){
   $('#state').change(App.callAPI);
   $(".filter-button").on('click', App.apiCall );
   $(".filter-button").click(App.filterResults);
-  $(".filter-button").click(App.compareResults);
+  // $(".filter-button").click(App.compareResults);
 });
 
 App.apiCall = function(e){
@@ -56,11 +56,9 @@ App.makeChart = function(energyData){
   analytics = App.getMaxNumber(energyData);
   var max = analytics[0];
   var min = analytics[1];
-  var avg = analytics[2];
 
-  $('#max').text("Max: " + max + " Btu");
   $('#min').text("Min: " + min + " Btu");
-  $('#avg').text("Average: " + avg + " Btu");
+  $('#max').text("Max: " + max + " Btu");
   $('.chart-title').text(energyData[0].name);
 
   $('.chart').empty();
@@ -74,10 +72,11 @@ App.makeChart = function(energyData){
   }
 
   var highestAmount = Math.max.apply(null, values);
+  var lowestAmount = Math.min.apply(null, values);
 
 var vis = d3.select('.chart'),
-    WIDTH = 500,
-    HEIGHT = 300,
+    WIDTH = 600,
+    HEIGHT = 400,
     MARGINS = {
       top: 20,
       right: 20,
@@ -99,7 +98,7 @@ var vis = d3.select('.chart'),
     .orient("left");
 
   vis.append('svg:g')
-    .attr('class', 'x axis')
+    .attr('id', 'x axis')
     .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
     .call(xAxis);
 
@@ -112,6 +111,7 @@ var vis = d3.select('.chart'),
     .data(barData)
     .enter()
     .append('rect')
+    .attr('class', function(d){return d.year;})
     .attr('x', function(d) { // sets the x position of the bar
       return xRange(d.year);
     })
@@ -129,5 +129,9 @@ var vis = d3.select('.chart'),
     })
     .attr("fill", "green")
     .attr("stroke", "black");
+
+    d3.selectAll("rect")
+      .style("fill", function(d){return d.amount == highestAmount ?"red":"green";});
 };
+
 
